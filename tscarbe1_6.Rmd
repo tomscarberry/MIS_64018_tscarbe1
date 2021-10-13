@@ -1,0 +1,74 @@
+---
+title: "Module 6 - The Transportation Model"
+author: "Tom Scarberry"
+date: "10/12/2021"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+# Problem formulation
+
+## /* Objective function */
+
+## min: 622 x11 + 614 x12 + 630 x13 + 641 x21 + 645 x22 + 649 x23;
+
+## /* Constraints */
+
+## x11 + x12 + x13 <= 100;
+
+## x21 + x22 + x23 <= 120;
+
+## x11 + x21 = 80;
+
+## x12 + x22 = 60;
+
+## x13 + x23 = 70;
+
+## Load library
+```{r echo=TRUE, results='hide', warning=FALSE}
+library(lpSolveAPI)
+```
+
+
+## Load the problem formulation lp file
+```{r}
+x <- read.lp("transportation_assignment.lp")
+
+```
+
+## Solve the transportation problem
+```{r}
+solve(x)
+
+
+```
+
+## Objective and variable values
+```{r}
+get.objective(x)
+get.variables(x)
+
+```
+
+## Add variable and constraint names
+```{r}
+ColNames <- c("PlantA_WH1","PlantA_WH2","PlantA_WH3","PlantB_WH1","PlantB_WH2","PlantB_WH3")
+RowNames <- c("PlantA_capacity","PlantB_capacity","WH1_demand","WH2_demand","WH3_demand")
+dimnames(x) <- list(RowNames,ColNames)
+
+```
+
+## Print out the model with column and row names
+```{r}
+x
+
+```
+
+
+# Recommendation
+# Plant A should produce 100 units and ship 60 to Warehouse 2 and 40 to Warehouse 3
+# Plant B should produce 110 units and ship 80 to Warehouse 1 and 30 to Warehouse 3
+# This leaves production slack available of 10 units in Plant B 
+# The production and transportation costs will be $132,790 per month
+
