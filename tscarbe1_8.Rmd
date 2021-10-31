@@ -1,0 +1,145 @@
+---
+title: "Module 8 - DEA"
+author: "Tom Scarberry"
+date: "10/25/2021"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+
+## Load benchmarking library
+```{r echo=TRUE, results='hide', warning=FALSE}
+library(lpSolveAPI)
+library(Benchmarking)
+```
+
+## Set up data as input and output vectors for benchmarking
+```{r}
+x <- matrix(c(150,400,320,520,350,320,0.2,0.7,1.2,2,1.2,0.7),ncol = 2)
+y <- matrix(c(14000,14000,42000,28000,19000,14000,3500,21000,10500,42000,25000,15000),ncol = 2)
+colnames(y) <- c("reimbursed","private_paid")
+colnames(x) <- c("staff_hours","supplies")
+x
+y
+```
+
+## Run DEA analysis using CRS
+```{r}
+d1 <- dea(x,y,RTS = "crs")
+d1
+
+```
+
+
+## Peers and lamda for CRS
+```{r}
+peers(d1)
+lambda(d1)
+
+```
+
+
+
+## Run DEA analysis using FDH
+```{r}
+d2 <- dea(x,y,RTS = "fdh")
+d2
+
+```
+
+
+## Peers and lamda for FDH
+```{r}
+peers(d2)
+lambda(d2)
+
+```
+
+
+
+## Run DEA analysis using VRS
+```{r}
+d3 <- dea(x,y,RTS = "vrs")
+d3
+
+```
+
+
+## Peers and lamda for VRS
+```{r}
+peers(d3)
+lambda(d3)
+
+```
+
+
+## Run DEA analysis using IRS
+```{r}
+d4 <- dea(x,y,RTS = "irs")
+d4
+
+```
+
+
+
+## Peers and lamda for IRS
+```{r}
+peers(d4)
+lambda(d4)
+
+```
+
+
+
+
+
+## Run DEA analysis using DRS
+```{r}
+d5 <- dea(x,y,RTS = "drs")
+d5
+
+```
+
+
+## Peers and lamda for DRS
+```{r}
+peers(d5)
+lambda(d5)
+
+```
+
+
+
+
+
+## Run DEA analysis using FRH
+```{r}
+d6 <- dea(x,y,RTS = "add")
+d6
+
+```
+
+
+## Peers and lamda for FRH
+```{r}
+peers(d6)
+lambda(d6)
+
+```
+
+
+
+# Tabular Summary of the Peers and Lambda results for different DEA model assumptions
+
+```{r echo=FALSE}
+knitr::include_graphics("C:\\Users\\scarb\\OneDrive\\KSU\\Quantitative Modelling\\Assignments\\DEA_Summary.jpg")
+
+```
+
+## Results across all different DEA assumptions are the same for Facilities 1-4, thus they are efficient across all modeling assumptions.  However, Facility 6 is not effient for all except the FRH assumption and Facility 5 is not efficient for CRS and DRS assumptions of the DEA model.
+
+
+
+## The FDH and FRH assumptions results in all facilities being efficient because neither applies the convexity assumption, which connects facilities 1-4 in all but the VRS and IRS  model assumptions.  The VRS and IRS model assumptions also include Facility 5 as efficient.  
+
