@@ -1,0 +1,77 @@
+---
+title: "Module 9 - Goal Programming"
+author: "Tom Scarberry"
+date: "11/1/2021"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+
+#  Emax Corporation wishes to Maximize Z=P-6C-3D; where P=total profit of new products, C=change of employment, and D=decrease in next year's earnings
+
+# Define terms for the problem
+
+## y1p is positive change of employment level from 50 and y1m is negative change of employment level from 50
+
+## y2p is positive change in next year's earnings and y2m is negative change in next year's earnings
+
+## x1 = production of product 1
+
+## x2 = production of product 2
+
+## x3 = production of product 3
+
+# Algebraic expression of terms for the problem
+
+## 6x1 + 4x2 + 5x3 - (y1p - y1m) = 50
+
+## 8x1 + 7x2 + 5x3 - (y2p - y2m)  = 75
+
+## P = 20x1 + 15x2 + 25x3
+
+# Management's Objective Function
+
+## Maximize 20x1 + 15x2 + 25x3 - 6 y1p - 6 y1m - 3 y2m
+
+
+# LP Model for Emax Corp
+
+## /* Objective function */
+
+## max:  20x1 + 15x2 + 25x3 - 6 y1p - 6 y1m - 3 y2m;
+
+## // Constraints
+
+## 6x1 + 4x2 + 5x3 + y1m - y1p = 50;
+
+## 8x1 + 7x2 + 5x3 + y2m - y2p = 75;
+
+
+## Load lp library and load lp file for Emax Corp
+```{r echo=TRUE, results='hide', warning=FALSE}
+library(lpSolveAPI)
+goal <- read.lp("goal_programming_assignment.lp")
+
+```
+
+## Emax linear model
+```{r}
+goal
+```
+
+## Solve Emax Corp linear model
+```{r}
+solve(goal)
+get.objective(goal)
+get.variables(goal)
+
+```
+
+# Emax Recommendation
+
+## Emax should produce 15 units of product 3 for an objective function score of 225.  This creates an employment level of 75, which is 25 over the constraint of 50.
+
+
+
+
